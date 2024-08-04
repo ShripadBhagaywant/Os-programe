@@ -1,0 +1,219 @@
+#include<stdio.h>
+#include<string.h>
+
+char processname[5][10];
+int bursttime[5],arrivaltime[5],ttime[5],tempbursttime[5];
+int finish,length,time,k,prev,quantum;
+
+struct Sequence
+{
+	int start,end;
+	char processname[10];
+}seq[100],seq1[20];
+
+void getinput()
+{
+	int x;
+	printf("Enter Time Quantum: ");
+	scanf("%d",&quantum);
+	printf("Enter No.of Proesses:");
+	scanf("%d",&length);
+	for(x=0;x<length;x++)
+	{
+		printf("Process name:");
+		scanf("%s",processname[x]);
+		printf("Burst time:");
+		scanf("%d",&bursttime[x]);
+		printf("Arrival time:");
+		scanf("%d",&arrivaltime[x]);
+	}
+}
+
+coutinput()
+{
+	int x;
+	printf("\nProcess\tBT\tAT");
+	for(x=0;x<length;x++)
+	{
+		printf("\n%s\t%d\t%d",processname[x],bursttime[x],arrivaltime[x]);
+	}
+	return 0;
+}
+
+ tcoutinput()
+{
+	int x;
+	printf("\nProcess\tBT\tAT");
+	for(x=0;x<length;x++)
+	{
+		printf("\n%s\t%d\t%d",processname[x],tempbursttime[x],arrivaltime[x]);
+	}
+	return 0;
+}
+
+ copy()
+{
+	int x;
+	for(x=0;x<length;x++)
+	{
+		tempbursttime[x]=bursttime[x];
+	}
+}
+
+ outputprocess()
+{
+	int x;
+	float AvgTAT=0,AvgWT=0;
+	printf("\nProcess\tTAT\tWT");
+	for(x=0;x<length;x++)
+	{
+		printf("\n%s\t%d\t%d",processname[x],
+							ttime[x]-arrivaltime[x],
+							ttime[x]-arrivaltime[x]-bursttime[x]);
+		AvgTAT+=ttime[x]-arrivaltime[x];
+		AvgWT+=ttime[x]-arrivaltime[x]-bursttime[x];
+	}
+	printf("\nAverage TAT = %f",AvgTAT/length);
+	printf("\nAverage WT = %f",AvgWT/length);
+}
+
+void swap(int x,int y)
+{
+	int temp;
+	char temp1[10];
+
+	temp=bursttime[x];
+	bursttime[x]=bursttime[y];
+	bursttime[y]=temp;
+
+	strcpy(temp1,processname[x]);
+	strcpy(processname[x],processname[y]);
+	strcpy(processname[y],temp1);
+
+	temp=arrivaltime[x];
+	arrivaltime[x]=arrivaltime[y];
+	arrivaltime[y]=temp;
+}
+
+void bubble()
+{
+	int i,j;
+	for(i=0;i<length;i++)
+	{
+		for(j=0;j<(length-1-i);j++)
+		{
+			if(arrivaltime[j+1]<arrivaltime[j])
+			{
+				swap(j+1,j);
+			}
+		}
+	}
+}
+
+int arrived(int t)
+{
+	int x;
+	for(x=0;x<length;x++)
+		if(arrivaltime[x]<=t && tempbursttime[x]!=0)
+			return 1;
+	return 0;
+}
+
+processinput()
+{
+	int x=0,y;
+	finish = 0;
+	k = 0;
+	while(finish!=length)
+	{
+		if(arrived(time))
+		{
+			if(tempbursttime[x]!=0)
+			{
+				for(y=0;y<quantum;y++)
+				{
+					tempbursttime[x]--;
+					time++;
+					//clrscr();
+					tcoutinput();
+					seq[k].start=prev;
+					seq[k].end = time;
+					strcpy(seq[k++].processname,processname[x]);
+					prev = time;
+					ttime[x]=time;
+					if(tempbursttime[x]==0)
+					{
+						finish++;
+						break;
+					}
+				}
+			}
+		}
+		else
+		{
+			time++;
+			seq[k].start=prev;
+			seq[k].end = time;
+			strcpy(seq[k++].processname,"*");
+			prev = time;
+		}
+		if(time < arrivaltime[(x+1)%length])
+			x=0;
+		else
+			x = (x+1)%length;
+	}
+	//clrscr();
+	coutinput();
+}
+
+ganttchart()
+{
+	int x,l=1;
+	seq1[0].start = seq[0].start;
+	seq1[0].end = seq[0].end;
+	strcpy(seq1[0].processname,seq[0].processname);
+	for(x=1;x<k;x++)
+	{
+		if(strcmp(seq1[l-1].processname,seq[x].processname)==0)
+		{
+			seq1[l-1].end = seq[x].end;
+		}
+		else
+		{
+			seq1[l].start = seq[x].start;
+			seq1[l].end = seq[x].end;
+			strcpy(seq1[l++].processname,seq[x].processname);
+		}
+	}
+	for(x=0;x<l;x++)
+	{
+		printf("\n%d\t%s\t%d",seq1[x].start,seq1[x].processname,seq1[x].end);
+	}
+	
+}
+
+ main()
+{
+	int x;
+	//clrscr();
+	getinput();
+		bubble();
+	coutinput();
+	copy();
+	processinput();
+	outputprocess();
+	ganttchart();
+
+	for(x=0;x<length;x++)
+	{
+		bursttime[x]=rand()%10+1;
+		arrivaltime[x]=ttime[x]+2;
+	}
+
+	
+	coutinput();
+	copy();
+	processinput();
+	outputprocess();
+	ganttchart();
+}

@@ -1,0 +1,52 @@
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+    FILE*fp;
+    char Fname[20];
+    long mem[1000],opcode,opnd,reg1,reg[4],pc;
+    printf("Enter the file name");
+    scanf("%s",&Fname);
+    fp = fopen(Fname,"r");
+    if(fp==NULL)
+    {
+            printf("file does not open");
+    }pc=0;
+    while(!feof(fp))
+    {
+        fscanf(fp,"%d",&mem[pc]);
+        pc++;
+    }pc=0;
+while(1)
+{
+    opcode = mem[pc]/10000;
+    reg1=((mem[pc]/1000)%10);
+    opnd= mem[pc]/1000;
+    
+    switch(opcode)
+    {
+        case 9:
+                printf("enter the no :");
+                scanf("%d",&mem[opnd]);
+        break;
+        case 10:
+                printf("result is:");
+                scanf("%d",&mem[opnd]);
+        break;
+        case 4:
+                reg[reg1]=mem[reg1];
+        break;
+        case 5:
+                mem[opnd]=reg[reg1];
+        break;
+        case 1:
+                reg[reg1]+=mem[opnd];
+        break;
+        case 0:
+                printf("exit..");
+        break;
+    }
+    pc++;
+}
+return 0;
+}

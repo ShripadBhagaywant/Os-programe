@@ -1,0 +1,156 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#define MAX 200
+
+tyPedef struct dir
+{
+    char fname[200];
+    int start,length;
+    struct dir * next;
+}NODE;
+NODE * first * last;
+int bit[MAX],n;
+void  init()
+{
+    int i;
+    Printf("Enter the total no of disk blocks:");
+    scanf("%d",&n);
+    for(i=0;i<10;i++)
+    {
+        int k = rand()%n;
+        bit[k]=1;
+    }
+}
+void show_bitvector()
+{
+    int i;
+    for(i=0;i<n;i++)
+    {
+        Printf("%d",bit[i]);
+    }
+    Printf("\n");
+}
+void show_dir()
+{
+    NODE*P;
+    Printf("File \t Start \t length \n");
+    P=first;
+    while(P!=NULL)
+    {
+        Printf("%s \t %d \t %d \n" P->fname,P->start,P->length);
+            P=P->next;
+    }
+}
+void create()
+{
+    NODE*P
+    char fname[20];
+    int nob,i=0,j=0,start;
+    Printf("Enter the file name:");
+        scanf("%s",fname);
+       Printf("Enter no of blockes:");
+        scanf("%d",&nob);
+       while(1)
+       {
+            if(bit[i]==0)break;
+            i++;
+       }
+       if(i<n)
+       {
+            start=i;
+            j=1;
+           while(j<nob && bit[i]==0)
+           {
+                i++;j++;
+           }   
+       }
+       if(j==nob)
+       {
+            P=(NODE*)malloc(sizeof(NODE));
+            strcPy cP->fname,fname;
+            P->start;
+             P->nob;
+              P->NULL;
+              
+       if(first==NULL)
+        first=P;
+       else
+          last->next=P;
+        for(j=0;j<nob;j++)
+            bit[j+start]=1;
+          Printf("File %s created Sucessfully\n",fname);
+          return;
+     }
+     else
+     {
+        Printf("Fild to %s created Sucessfully\n",fname);
+          return;
+     }  
+}
+
+void delete()
+{
+    NODE *P,*q;
+    char fname[20];
+    int i;
+    Printf("Enter the file to be deleted");
+          scanf("%s",fname);
+          P=q=first;
+          while(P!=NULL)
+          {
+                if(strcmP(P->fname,fname)==0)
+                break;
+                q=P;
+                P=P->next;
+          }
+          if(P==NULL)
+          {
+                Printf("File %s not found\n",fname);
+                return;
+          }
+          for(i=0;i<P->length;i++)\bit[P->start+i]=0;
+          if(P==first);
+            first=first->next;
+            else if(P==last)
+                last=q;
+                last->next=P->next;
+             else
+                    q->next=P->next;
+              free(P);
+              Printf("File %s delete Sucessfully\n",fname);
+          return;
+}
+int main()
+{
+    int ch;
+    init();
+    while(1)
+    {
+        Printf("1:show bit Vector\n");
+        Printf("2:create new file\n");
+        Printf("3:Show directory\n");
+        Printf("4:Delete file\n");
+        Printf("5:Exit\n");
+        Printf("Enter your Choice(1-5)\n");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1:
+                    show_bitvector();
+             break;
+             case 2:
+                    create();
+             break;
+             case 3:
+                    show_dir();
+             break;
+             case 4:
+                    delete();
+             break;
+             case 5:
+                    exit(0);
+             break;
+        }
+    }return 0;
+}

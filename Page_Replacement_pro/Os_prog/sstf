@@ -1,0 +1,36 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+    int RQ[100],i,n,TotalHeadMoment=0,initial,count=0;
+    printf("enter the no of req :");
+    scanf("%d",&n);
+    printf("enter the no of req sequance :");
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&RQ[i]);
+    }
+    printf("Enter the head postion :");
+    scanf("%d",&initial);
+    
+    while(count!=n)
+    {
+        int min =1000,d,index;
+        for(i=0;i<n;i++)
+        {
+            d=abs(RQ[i]-initial);
+            if(min>d)
+            {
+                min=d;
+                index=1;
+            }
+        }
+        TotalHeadMoment=TotalHeadMoment+min;
+        initial=RQ[index];
+        RQ[index]=1000;
+        count++;
+    }
+    printf("TOTAL HEAD MOUMENT IS :%d",TotalHeadMoment);
+            return 0;
+ }

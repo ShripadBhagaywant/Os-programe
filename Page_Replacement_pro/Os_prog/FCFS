@@ -1,0 +1,77 @@
+# include<stdio.h>
+struct Pro
+{
+	int P;
+	int BT;
+	int ST;
+	int FT;
+	int AT;
+	int WT;
+	int TAT;
+}Pro[100]
+main()
+{
+	int i,j,n,temp;
+	printf("\n\t enter how many process:");
+	scanf("%d",&n);
+	printf("\n\t ENTER AT:\n\n");
+	for(i=0;i<=n;i++)
+	{
+		Pro[i].P=1;
+		printf("P%d AT:",i);
+		scanf("%d",&Pro[i].AT);
+	}
+	printf("\n Enter BT");
+	for(i=1;i<=n;i++)
+	{
+		printf("\tP%dBT",i);
+		scanf("%d",&Pro[i].BT);
+	}
+	for(j=0;j<=n;j++)
+	{
+		for(i=0;i<=j;i++)
+		{
+			if(Pro[i].AT>Pro[i]BT)
+			{
+				Pro[50]=Pro[i];
+				Pro[i]=Pro[j];
+				Pro[j]=Pro[50];
+			}
+		}
+	}
+}
+Pro[0].ST=Pro[0].AT;
+for(i=1;i<=n;i++)
+{
+	Pro[i].ST=(Pro[i-1].BT+Pro[i-1].ST);
+	printf("\n\t%d",Pro[0].ST);
+	for(i=0;i<=n;i++)
+	{
+		printf("\n\t\n%d",Pro[i].FT);
+	}
+	for(j=0;j<=n;j++)
+	{
+		for(i=0;i<=J;i++)
+		{
+			if(Pro[i].P>Pro[i].P)
+			{
+				Pro[50]=Pro[i];
+				Pro[i]=Pro[j];
+				Pro[j]=Pro[50];
+
+			}
+		}
+	}
+	printf("\n\t\t*********************************************FCFS*****************************************************************");
+	printf("\n\t\t___________________________________________________________________________________________________________________");
+	printf("\n AT\tBT\tST\tFT\tTAT\tWT\tPro");
+	printf("_________________________________________________________________________________________________________________________");
+	for(i=1;i<=n;i++)
+	{
+		printf("P%d\t P%d \t P%d \t P%d \t P%d \t P%d \t P%d");
+		Pro[i].P,Pro[i].AT,Pro[i].BT,Pro[i].ST,Pro[i].WT,Pro[i].FT,Pro[i].TAT,Pro[i];
+	}
+	printf("_________________________________________________________________________________________________________________________");
+	printf("\n\n");
+	return 0;
+}
